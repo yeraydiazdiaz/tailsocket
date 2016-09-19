@@ -24,7 +24,7 @@ def find_version():
 
 
 def get_readme():
-    readme_path = os.path.join(current_path, 'README.md')
+    readme_path = os.path.join(current_path, 'README.rst')
     return read(readme_path)
 
 
