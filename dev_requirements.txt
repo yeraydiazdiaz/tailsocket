@@ -1,0 +1,4 @@
+-r requirements.txt
+pytest-asyncio==0.4.1
+pytest-cov==2.3.1
+tox==2.3.1

@@ -1,0 +1,7 @@
+include README.md
+include setup.cfg
+include tox.ini
+include *.js*
+include *requirements.txt
+recursive-include tailsocket/templates *
+recursive-include tailsocket/static/bin *

@@ -1,0 +1,25 @@
+<html>
+   <head>
+      <title>TailSocket</title>
+      {% if not webpackdevserver %}
+      <link rel="stylesheet" href="/static/bin/style.css">
+      {% else %}
+      <link rel="stylesheet" href="{{ webpackdevserver }}/style.css">
+      {% end %}
+   </head>
+   <body>
+    <div class="container">
+      <h1>TailSocket</h1>
+      <h2 class="subheading">tail -f system.log | websocket</h2>
+      <div class="output" id="output"
+         {% if ws_host_port %} data-host-port="{{ ws_host_port }}"{% end %}
+         data-logging="{{ logging }}"
+         data-initial-text-value={{ initial_text_value }}></div>
+      {% if not webpackdevserver %}
+      <script type="text/javascript" src="/static/bin/tailsocket.bundle.js"></script>
+      {% else %}
+      <script type="text/javascript" src="{{ webpackdevserver }}/tailsocket.bundle.js"></script>
+      {% end %}
+    </div>
+   </body>
+ </html>

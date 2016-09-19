@@ -1,0 +1,98 @@
+$white: #fff;
+$gray: #888;
+$light-gray: #ccc;
+$lighter-gray: #eee;
+$line-height: 12px;
+$green: #008000;
+$text-success: #3c763d;
+$text-alert: #a94442;
+$red: #f00;
+$button-blue: #286090;
+
+html {
+  line-height: $line-height;
+}
+
+pre {
+  clear: both;
+}
+
+h1 {
+  font-family: Courier, serif !important;
+  font-weight: bold !important;
+}
+
+.subheading {
+  color: $button-blue;
+  font-family: Courier, serif;
+  font-size: 1.2em;
+  margin: -.75em 1em 1.5em 4em;
+}
+
+.asynclogger {
+  border: 1px solid $light-gray;
+  padding: 1em;
+
+  textarea {
+    background-color: $lighter-gray;
+    border: 1px solid $light-gray;
+    font-family: Courier, serif;
+    height: 500px;
+    margin-top: 1em;
+    max-width: 100%;
+    min-height: 150px;
+    min-width: 100%;
+    padding: 1em;
+    width: 100%;
+  }
+}
+
+.connection-status {
+  border-radius: 50%;
+  float: left;
+  font-size: 1.2em;
+  height: 1.5em;
+  margin: .2em .7em .5em 0;
+  padding: 0;
+  width: 1.5em;
+
+  .glyphicon {
+    color: $white;
+    margin: .2em;
+  }
+}
+
+.connected {
+  background-color: $text-success;
+}
+
+.disconnected {
+  background-color: $text-alert;
+  padding-left: 1px;
+}
+
+.file-path-text-input {
+
+  button {
+    height: 2.2em;
+    margin-left: 1em;
+  }
+
+  input {
+    height: 2.2em;
+    margin-left: 1em;
+    padding-left: .5em;
+    width: calc(100% - 160px);
+  }
+
+  label {
+    font-weight: normal;
+    width: 100%;
+  }
+
+  ul {
+    color: $gray;
+    font-size: .8em;
+  }
+
+}

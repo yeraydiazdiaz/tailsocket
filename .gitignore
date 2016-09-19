@@ -1,0 +1,16 @@
+*.py[co]
+__pycache__/
+*.sublime*
+*.log
+node_modules/
+**/static/bin/
+*egg*
+.cache/
+docs/build/
+*.vagrant
+.coverage
+.python-version
+.tox/
+build/
+dist/
+.eslintrc
