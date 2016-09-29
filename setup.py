@@ -1,6 +1,6 @@
 import os
 import re
-from setuptools import setup
+from setuptools import setup, find_packages
 
 
 current_path = os.path.abspath(os.path.dirname(__file__))
@@ -31,7 +31,7 @@ def get_readme():
 setup(
     name='tailsocket',
     version=find_version(),
-    packages=('tailsocket', 'tests'),
+    packages=find_packages(),
     url='https://github.com/yeraydiazdiaz/tailsocket',
     license='MIT',
     author='Yeray Diaz Diaz',

@@ -5,7 +5,6 @@ Starts up the Tornado application, defines logging, routing and handlers.
 
 """
 import os
-import sys
 import asyncio
 import logging
 import selectors
@@ -14,8 +13,8 @@ from tornado import options, websocket
 from tornado.platform.asyncio import AsyncIOMainLoop
 from tornado.web import RequestHandler, Application, url
 
+from tailsocket.reader_registries import get_registry
 from tailsocket.log import setup_logging
-from tailsocket.reader_registry import ReaderRegistry
 
 logger = logging.getLogger('tornado.application')
 
@@ -105,7 +104,7 @@ class TailSocketApplication(Application):
     """
 
     def __init__(self):
-        self.registry = ReaderRegistry()
+        self.registry = get_registry()
 
         handlers = [
             url(r"/", HomePageHandler, {}, 'home'),
@@ -125,10 +124,7 @@ class TailSocketApplication(Application):
 def main():
     options.parse_command_line()
 
-    if options.options.policy == 'select' or sys.platform == 'linux':
-        # force `select` on Linux as the default `epoll` does not
-        # support regular files
-        # TODO: use pyinotify with AsyncNotifier?
+    if options.options.policy == 'select':
         selector = selectors.SelectSelector()
         loop = asyncio.SelectorEventLoop(selector)
         asyncio.set_event_loop(loop)

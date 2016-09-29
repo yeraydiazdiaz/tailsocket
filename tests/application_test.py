@@ -89,7 +89,7 @@ class ApplicationTests(AsyncHTTPTestCase):
         assert 'error' in response.lower()
 
     @tornado.testing.gen_test
-    @mock.patch('tailsocket.reader_registry.ReaderRegistry.add_handler_to_filename')
+    @mock.patch('tailsocket.reader_registries.loop_reader_registry.ReaderRegistry.add_handler_to_filename')
     def test_websocket_opening_connection_does_not_add_handler(
             self, add_handler_to_filename):
         ws_url = "ws://localhost:{}/websocket/test_name".format(
@@ -98,7 +98,7 @@ class ApplicationTests(AsyncHTTPTestCase):
         add_handler_to_filename.assert_not_called()
 
     @tornado.testing.gen_test
-    @mock.patch('tailsocket.reader_registry.ReaderRegistry.remove_handler_from_filename')
+    @mock.patch('tailsocket.reader_registries.loop_reader_registry.ReaderRegistry.remove_handler_from_filename')
     def test_websocket_closing_connection_does_not_call_registry(
             self, remove_handler_from_filename):
         ws_url = "ws://localhost:{}/websocket/test_name".format(
@@ -108,7 +108,7 @@ class ApplicationTests(AsyncHTTPTestCase):
         remove_handler_from_filename.assert_not_called()
 
     @tornado.testing.gen_test
-    @mock.patch('tailsocket.reader_registry.ReaderRegistry.remove_handler_from_filename')
+    @mock.patch('tailsocket.reader_registries.loop_reader_registry.ReaderRegistry.remove_handler_from_filename')
     def test_websocket_closing_connection_does_not_call_registry(
             self, remove_handler_from_filename):
         ws_url = "ws://localhost:{}/websocket/test_name".format(
@@ -118,7 +118,7 @@ class ApplicationTests(AsyncHTTPTestCase):
         remove_handler_from_filename.assert_not_called()
 
     @tornado.testing.gen_test
-    @mock.patch('tailsocket.reader_registry.ReaderRegistry.remove_handler_from_filename')
+    @mock.patch('tailsocket.reader_registries.loop_reader_registry.ReaderRegistry.remove_handler_from_filename')
     def test_websocket_closing_connection_removes_handler(
             self, remove_handler_from_filename):
         conftest._create_log_file()

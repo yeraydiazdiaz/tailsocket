@@ -8,7 +8,7 @@ import asyncio
 import logging
 from functools import partial
 
-from .errors import ExcessiveEmptyMessagesError
+from tailsocket.errors import ExcessiveEmptyMessagesError
 
 logger = logging.getLogger('tornado.application')
 
@@ -102,11 +102,10 @@ class ReaderRegistry():
 
         """
         logger.debug('Adding handler for {}'.format(filename))
-
+        filename = os.path.abspath(filename)
         if filename not in self.readers:
             logger.debug(
                 '{} not in readers, adding descriptor'.format(filename))
-            # TODO: log a few lines?
             fd, content = self.create_reader(
                 filename, self.initial_lines_from_file)
             self.readers[filename] = {
@@ -136,6 +135,7 @@ class ReaderRegistry():
             bool: True if handler was removed correctly.
 
         """
+        filename = os.path.abspath(filename)
         logger.debug('Removing handler for {}'.format(filename))
         try:
             if ws_handler not in self.readers[filename]['handlers']:
@@ -150,15 +150,23 @@ class ReaderRegistry():
             return False
 
         self.readers[filename]['handlers'].remove(ws_handler)
-
         if not self.readers[filename]['handlers']:
-            logger.debug('No handlers left for {}, removing'.format(filename))
-            loop = asyncio.get_event_loop()
-            loop.remove_reader(self.readers[filename]['descriptor'])
-            self.readers[filename]['descriptor'].close()
-            del self.readers[filename]
+            self.remove_reader_for_filename(filename)
 
         return True
+
+    def remove_reader_for_filename(self, filename):
+        """Removes reader registration for a filename.
+
+        Args:
+            filename (str): Path to file which should exist in the registry.
+
+        """
+        logger.debug('No handlers left for {}, removing'.format(filename))
+        loop = asyncio.get_event_loop()
+        loop.remove_reader(self.readers[filename]['descriptor'])
+        self.readers[filename]['descriptor'].close()
+        del self.readers[filename]
 
     def reader(self, descriptor):
         """Reader callback for a file descriptor. Handles reading the last line
@@ -183,16 +191,23 @@ class ReaderRegistry():
             logger.info('Detected rotation on file {} - Sizes {} < {}'.format(
                 filename, stat.st_size, reader['previous_stat'].st_size))
 
-            loop = asyncio.get_event_loop()
-            loop.remove_reader(reader['descriptor'])
-            reader['descriptor'], msg = self.create_reader(
-                reader['descriptor'].name, 1)
+            self.remove_reader_callback_for_descriptor(descriptor)
+            reader['descriptor'], msg = self.create_reader(filename, 1)
         else:
             msg = descriptor.read().decode()
 
         msg = msg.strip()
         self.send_message_to_handlers(msg, reader['handlers'])
         reader['previous_stat'] = stat
+
+    def remove_reader_callback_for_descriptor(self, descriptor):
+        """Removes the reader callback for a particular descriptor.
+
+        Args:
+            descriptor (file-like): The descriptor to remove the callback for.
+        """
+        loop = asyncio.get_event_loop()
+        loop.remove_reader(descriptor)
 
     def send_message_to_handlers(self, message, handlers):
         """Sends a message string to the handlers

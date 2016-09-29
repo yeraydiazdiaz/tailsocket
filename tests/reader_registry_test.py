@@ -3,6 +3,7 @@ Test suite for ReaderRegistry
 
 """
 
+import os
 import sys
 import asyncio
 import selectors
@@ -10,7 +11,7 @@ from unittest import mock
 
 import pytest
 
-from tailsocket.reader_registry import ReaderRegistry
+from tailsocket.reader_registries import get_registry
 from tests import conftest
 
 
@@ -55,7 +56,7 @@ def create_reader_and_add_handler(filename=None, handler=None, **kwargs):
         tuple: A ReaderRegistry instance and the (possibly new) handler
     """
     filename = filename or DEFAULT_FILENAME
-    registry = ReaderRegistry(**kwargs)
+    registry = get_registry(**kwargs)
     if handler is None:
         handler = mock.MagicMock()
         handler.write_message.return_value = None
@@ -73,14 +74,14 @@ def noop():
 
 def test_a_new_registry_incudes_a_readers_dictionary(
         safe_event_loop, create_log_file):
-    registry = ReaderRegistry()
+    registry = get_registry()
     assert registry.readers == {}
 
 
 def test_registry_can_add_handlers_to_filenames(
         safe_event_loop, create_initialised_log_file):
     registry, handler = create_reader_and_add_handler()
-    assert DEFAULT_FILENAME in registry.readers
+    assert os.path.abspath(DEFAULT_FILENAME) in registry.readers
 
 
 def test_adding_a_handler_can_optionally_not_send_first_lines(
@@ -135,13 +136,14 @@ def test_removing_one_of_many_handlers(safe_event_loop, create_log_file):
     registry, handler = create_reader_and_add_handler()
     another_handler = mock.MagicMock()
     another_handler.write_message.return_value = None
-    registry.add_handler_to_filename(another_handler, DEFAULT_FILENAME)
+    filename = os.path.abspath(DEFAULT_FILENAME)
+    registry.add_handler_to_filename(another_handler, filename)
 
-    assert handler in registry.readers[DEFAULT_FILENAME]['handlers']
-    assert another_handler in registry.readers[DEFAULT_FILENAME]['handlers']
+    assert handler in registry.readers[filename]['handlers']
+    assert another_handler in registry.readers[filename]['handlers']
 
-    registry.remove_handler_from_filename(handler, DEFAULT_FILENAME)
-    assert another_handler in registry.readers[DEFAULT_FILENAME]['handlers']
+    registry.remove_handler_from_filename(handler, filename)
+    assert another_handler in registry.readers[filename]['handlers']
 
 
 # Note the `event_loop` fixture is injected automatically

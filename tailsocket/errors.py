@@ -9,3 +9,10 @@ class ExcessiveEmptyMessagesError(Exception):
 
     """
     pass
+
+
+class CouldNotCreateDescriptorError(Exception):
+    """Raised when a descriptor could not be created for a file path.
+
+    """
+    pass

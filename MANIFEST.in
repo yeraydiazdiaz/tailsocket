@@ -3,5 +3,6 @@ include setup.cfg
 include tox.ini
 include *.js*
 include *requirements.txt
+global-exclude *.pyc
 recursive-include tailsocket/templates *
 recursive-include tailsocket/static/bin *
