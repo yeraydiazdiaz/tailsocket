@@ -54,4 +54,9 @@ setup(
     },
     setup_requires=['pytest-runner'],
     tests_require=['pytest'],
+    extras_require={
+        ":sys_platform=='linux'": [
+            'pyinotify==0.9.6',
+        ],
+    }
 )
