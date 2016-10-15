@@ -2,6 +2,8 @@
 
 A WebSocket application to tail files.
 
+![Tailsocket capture](https://raw.githubusercontent.com/yeraydiazdiaz/tailsocket/master/capture.gif "Tailsocket in action!")
+
 You've set up your machine and you're tweaking config files to get it just right, this last bit should do it... oh, it doesn't? Weird, where's that log again? Hmm, I know it's in the history somewhere, or did I have it on screen/tmux? Which one? :/
 
 Say no more! `pip install tailsocket`, run `tailsocket-server`, write the path to the log file *once* and let the logs come to you!
@@ -14,7 +16,6 @@ Try it out at http://tailsocket.herokuapp.com/
 
 ## Issues
 
-- Fallback to `select` on Linux causes high CPU loads and spam on the application logs.
 - Changing a tailed log file does not show confirmation, simply new log entries.
 - Application messages and errors show in the same context as log entries.
 
@@ -22,3 +23,8 @@ Try it out at http://tailsocket.herokuapp.com/
 
 - Globbing
 - Multiple log screens
+
+## Changelog
+
+- *v0.1.1* - Use the more performant [pyinotify](https://github.com/seb-m/pyinotify) in Linux platforms instead of a raw `select` event loop.
+- *v0.1* - Initial version.

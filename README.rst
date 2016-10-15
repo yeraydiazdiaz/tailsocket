@@ -1,7 +1,10 @@
 Tailsocket
 ==========
 
-A WebSocket application to tail files.
+.. figure:: https://raw.githubusercontent.com/yeraydiazdiaz/tailsocket/master/capture.gif
+   :alt: Tailsocket in action!
+
+   Tailsocket capture
 
 You've set up your machine and you're tweaking config files to get it
 just right, this last bit should do it... oh, it doesn't? Weird, where's
@@ -23,8 +26,6 @@ Try it out at http://tailsocket.herokuapp.com/
 Issues
 ------
 
--  Fallback to ``select`` on Linux causes high CPU loads and spam on the
-   application logs.
 -  Changing a tailed log file does not show confirmation, simply new log
    entries.
 -  Application messages and errors show in the same context as log
@@ -35,3 +36,11 @@ Enhancements
 
 -  Globbing
 -  Multiple log screens
+
+Changelog
+---------
+
+-  *v0.1.1* - Use the more performant
+   `pyinotify <https://github.com/seb-m/pyinotify>`__ in Linux platforms
+   instead of a raw ``select`` event loop.
+-  *v0.1* - Initial version.
