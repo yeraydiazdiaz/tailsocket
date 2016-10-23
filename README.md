@@ -2,6 +2,8 @@
 
 A WebSocket application to tail files.
 
+[![Build Status](https://travis-ci.org/yeraydiazdiaz/tailsocket.svg?branch=master)](https://travis-ci.org/yeraydiazdiaz/tailsocket)
+
 ![Tailsocket capture](https://raw.githubusercontent.com/yeraydiazdiaz/tailsocket/master/capture.gif "Tailsocket in action!")
 
 You've set up your machine and you're tweaking config files to get it just right, this last bit should do it... oh, it doesn't? Weird, where's that log again? Hmm, I know it's in the history somewhere, or did I have it on screen/tmux? Which one? :/
