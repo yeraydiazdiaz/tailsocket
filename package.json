@@ -40,7 +40,7 @@
     "karma-sinon": "^1.0.5",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^1.8.0",
-    "node-sass": "^3.8.0",
+    "node-sass": "^4.14.1",
     "node-uuid": "^1.4.7",
     "react": "^15.3.1",
     "react-addons-test-utils": "^15.3.1",
